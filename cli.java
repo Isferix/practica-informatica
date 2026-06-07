@@ -2,6 +2,7 @@ import extra.ListQuery;
 import models.Persona;
 import models.GrupoFamiliar;
 import models.Ubicacion;
+import models.FamiliarTipo;
 import models.Familiar;
 import models.FamiliarRelacion;
 import java.util.List;
@@ -158,16 +159,26 @@ public class cli {
                     FamiliarRelacion relacionSeleccionada = FamiliarRelacion.otro; // por defecto
                     try {
                         int opcionRel = Integer.parseInt(scanner.nextLine().trim()) - 1;
-                        if (opcionRel >= 0 && opcionRel < relaciones.length) {
-                            relacionSeleccionada = relaciones[opcionRel];
-                        }
-                    } catch (NumberFormatException e) {
-                        System.out.println("Opción inválida. Se asignará 'otro'.");
+                        if (opcionRel >= 0 && opcionRel < relaciones.length) relacionSeleccionada = relaciones[opcionRel];
+                    } catch (NumberFormatException e) {System.out.println("Opción inválida. Se asignará 'otro'.");}
+
+                    // Selección del Enum FamiliarTipo  
+                    System.out.println("   Seleccione el tipo de familiar:");
+                    FamiliarTipo[] tipos = FamiliarTipo.values();
+                    for (int i = 0; i < tipos.length; i++) {
+                        System.out.printf("     %d. %s%n", i + 1, tipos[i]);
                     }
+                    System.out.print("   Opción (número): ");
+                    FamiliarTipo tipoSeleccionado = FamiliarTipo.desconocido; // por defecto
+                    try {
+                        int opcionTipo = Integer.parseInt(scanner.nextLine().trim()) - 1;
+                        if (opcionTipo >= 0 && opcionTipo < tipos.length) tipoSeleccionado = tipos[opcionTipo];
+                    } catch (NumberFormatException e) {System.out.println("Opción inválida. Se asignará 'desconocido'.");}              
 
                     // Crear instancia de Familiar y añadir a la lista temporal
                     Familiar nuevoFamiliar = new Familiar(
-                        relacionSeleccionada, 
+                        relacionSeleccionada,
+                        tipoSeleccionado,
                         descFam, 
                         dniFam, 
                         nomFam
@@ -308,8 +319,8 @@ public class cli {
         else {
             System.out.printf("RESULTADO: Se encontraron %d vínculo(s) directo(s) registrado(s):%n", familiares.size());
             for (Familiar f : familiares) {
-                System.out.printf("   %s [%s] - DNI: %s (Relación: %s)%n", 
-                    f.nombreCompleto(), f.descripcion(), f.dni(), f.relacion());
+                System.out.printf("   %s [%s] - DNI: %s (Relación: %s) | Tipo: %s%n", 
+                    f.nombreCompleto(), f.descripcion(), f.dni(), f.relacion(), f.tipo());
             }
         }
     }
