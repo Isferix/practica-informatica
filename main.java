@@ -2,6 +2,8 @@ import repo.InMemory;
 import repo.PersonaRepository;
 
 import extra.CSVExporter;
+import interfaces.cli;
+
 import java.nio.file.Path;
 public class main {
     public static void main(String[] args) {
