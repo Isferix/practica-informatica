@@ -2,6 +2,7 @@ import extra.ListQuery;
 import models.Persona;
 import models.GrupoFamiliar;
 import models.Ubicacion;
+import repo.PersonaRepository;
 import models.FamiliarTipo;
 import models.Familiar;
 import models.FamiliarRelacion;
