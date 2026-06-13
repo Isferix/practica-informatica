@@ -30,34 +30,6 @@ public class cli {
         this.personaSeleccionada = null;
     }
 
-    public void run() {
-        boolean salir = false;
-        System.out.println("=== Sistema de Gestión de Personas ===");
-
-        while (!salir) {
-            mostrarEstadoYMenu();
-            String opcion = scanner.nextLine().trim();
-
-            switch (opcion) {
-                case "0" -> {
-                    salir = true;
-                    System.out.println("Saliendo del sistema... ¡Adiós!");
-                }
-                case "1" -> ejecutarExportarCSV();
-                case "2" -> ejecutarAgregar();
-                case "3" -> ejecutarEliminar();
-                case "4" -> ejecutarListar();
-                case "5" -> ejecutarBuscarPorId();
-                case "6" -> ejecutarBuscarPorDni();
-                case "7" -> ejecutarValidarDatos();
-                case "8" -> ejecutarEsCabezaFamiliar();
-                case "9" -> ejecutarGetFamiliaresAsociados();
-                default -> System.out.println("Opción inválida. Intente nuevamente.");
-            }
-            System.out.println(); // Espacio estético
-        }
-    }
-
     
     private void mostrarEstadoYMenu() {
         System.out.println("------------------------------------------------");
@@ -325,6 +297,34 @@ public class cli {
                 System.out.printf("   %s [%s] - DNI: %s (Relación: %s) | Tipo: %s%n", 
                     f.nombreCompleto(), f.descripcion(), f.dni(), f.relacion(), f.tipo());
             }
+        }
+    }
+
+    public void run() {
+        boolean salir = false;
+        System.out.println("=== Sistema de Gestión de Personas ===");
+
+        while (!salir) {
+            mostrarEstadoYMenu();
+            String opcion = scanner.nextLine().trim();
+
+            switch (opcion) {
+                case "0" -> {
+                    salir = true;
+                    System.out.println("Saliendo del sistema... ¡Adiós!");
+                }
+                case "1" -> ejecutarExportarCSV();
+                case "2" -> ejecutarAgregar();
+                case "3" -> ejecutarEliminar();
+                case "4" -> ejecutarListar();
+                case "5" -> ejecutarBuscarPorId();
+                case "6" -> ejecutarBuscarPorDni();
+                case "7" -> ejecutarValidarDatos();
+                case "8" -> ejecutarEsCabezaFamiliar();
+                case "9" -> ejecutarGetFamiliaresAsociados();
+                default -> System.out.println("Opción inválida. Intente nuevamente.");
+            }
+            System.out.println(); // Espacio estético
         }
     }
 }
