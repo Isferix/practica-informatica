@@ -1,28 +1,31 @@
-import extra.ListQuery;
+import repo.PersonaRepository;
+
 import models.Persona;
 import models.GrupoFamiliar;
 import models.Ubicacion;
-import repo.PersonaRepository;
 import models.FamiliarTipo;
 import models.Familiar;
 import models.FamiliarRelacion;
+
+import extra.ListQuery;
+import extra.CSVExporter;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 
 public class cli {
 
     private final PersonaRepository repo;
+    private final CSVExporter csvExporter;
     private final Scanner scanner;
     private Persona personaSeleccionada;
-    private final Path rutaPredeterminadaCSV = Paths.get(".", "files", "personas.csv");
 
-    public cli(PersonaRepository repo) {
+    public cli(PersonaRepository repo, CSVExporter csvExporter) {
         this.repo = repo;
+        this.csvExporter = csvExporter;
         this.scanner = new Scanner(System.in);
         this.personaSeleccionada = null;
     }
@@ -88,11 +91,10 @@ public class cli {
         System.out.println("Iniciando proceso de exportación...");
         try {
             // Llama al repositorio pasando la ruta ./files/personas.csv
-            repo.exportarCSV(rutaPredeterminadaCSV);
-            
+            csvExporter.exportar(repo);
             // ToAbsolutePath ayuda a mostrarle al usuario exactamente dónde quedó el archivo en el sistema de archivos
             System.out.println("Exportación exitosa");
-            System.out.println("Archivo guardado en: " + rutaPredeterminadaCSV.toAbsolutePath());
+            System.out.println("Archivo guardado en: " + csvExporter.getPath());
         } catch (IOException e) {System.out.println("Error crítico al escribir el archivo CSV: " + e.getMessage());}
     }    
 
